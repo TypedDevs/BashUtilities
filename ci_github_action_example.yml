@@ -1,0 +1,23 @@
+on: push
+name: Execute test on push
+jobs:
+    tests:
+        runs-on: ubuntu-latest
+        steps:
+            - name: 🕎 Clone and checkout of the actual branch
+              uses: actions/checkout@v2
+            - name: 🗑 Remove package-lock.json
+              run: rm package-lock.json
+            - name: 🚾 Force to clear cache
+              run: npm cache clean --force
+            - name: ✅ Install dependencies
+              run: npm install
+            - name: ⚡ NPM verify cache
+              run: npm cache verify
+            - name: 🐛 Audit dependencies
+              run: npm audit fix
+            - name: ☢ Execute test
+              run: npm run test
+            # Commented up until we can use SOLID
+            #- name: 🔍 Search for Copy/Pasted code
+            #  run: npm run jsinspect
