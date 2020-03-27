@@ -1,0 +1,56 @@
+{
+	"name": "Package-name",
+	"author": "Author name <author@email.com> (Domain.com)",
+	"version": "0.0.1",
+	"scripts": {
+		"development": "nodemon index.js -e js,graphql",
+		"netstat": "sudo netstat -nptl | grep node",
+		"start": "node src/index.js",
+		"prettier:lint": "prettier -l \"./src/**/*.{js,jsx,css,json,scss,ts,css,sass,less}\"",
+		"format": "npm run prettier -- --write",
+		"lint": "./node_modules/.bin/eslint ./src; exit 0",
+		"lint:fix": "npm run lint --fix",
+		"validate": "npm run prettier -- && npm run lint:fix",
+		"prettier": "prettier --write src/**/*.{js,jsx,css,json,scss,ts,css,sass,less}",
+		"test": "./node_modules/.bin/jest  --verbose --coverage --updateSnapshot",
+		"watch": "./node_modules/.bin/jest --watch --notify --verbose --coverage --updateSnapshot",
+		"prettier:check": "prettier -l \"src/**/*.{js,jsx,css,json,scss,ts,css,sass,less}\"",
+		"jsinspect": "./node_modules/.bin/jsinspect src",
+		"lint-staged": "lint-staged",
+		"dev": "./run_dev.sh",
+		"database_migration": "./execute_sql_scripts.sh",
+		"token": "./generate_tokens.sh",
+		"tree": "./generate_tree.sh"
+	},
+	"main": "index.js",
+	"dependencies": {
+
+	},
+	"devDependencies": {
+		"dotenv": "^8.2.0",
+		"eslint": "^6.8.0",
+		"eslint-plugin-prettier": "^3.1.2",
+		"husky": "^4.2.3",
+		"jest": "^25.1.0",
+		"jsinspect": "^0.12.7",
+		"lint-staged": "^10.0.7",
+		"nodemon": "^2.0.2",
+		"prettier": "^1.19.1"
+	},
+	"keywords": [],
+	"license": "UNLICENSED",
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+	"lint-staged": {
+		"**/*.{jsx,js,md,ts,css,sass,less,graphql,yml,yaml,scss,json,vue}": [
+			"npm run format",
+			"npm run lint:fix",
+			"./generate_env_example.sh",
+			"npm run test . ",
+			"git add"
+		]
+	}
+}
